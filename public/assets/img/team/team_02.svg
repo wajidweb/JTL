@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d7082"/>
+      <stop offset="100%" stop-color="#163e49"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2f1f5"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="url(#bg2)"/>
+  <circle cx="100" cy="80" r="34" fill="url(#avatarGrad2)"/>
+  <path d="M48 168 C48 128, 72 118, 100 118 C128 118, 152 128, 152 168 Z" fill="url(#avatarGrad2)"/>
+  <!-- Speech Audio Icon Badge -->
+  <circle cx="160" cy="45" r="16" fill="#b1f1ff"/>
+  <path d="M153 43 C153 40, 156 38, 160 38 C164 38, 167 40, 167 43 C167 45, 165 47, 163 48 L163 51 L157 51 L157 48" stroke="#163e49" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a04444"/>
+      <stop offset="100%" stop-color="#5a2222"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0dede"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="url(#bg1)"/>
+  <circle cx="100" cy="80" r="34" fill="url(#avatarGrad)"/>
+  <path d="M48 168 C48 128, 72 118, 100 118 C128 118, 152 128, 152 168 Z" fill="url(#avatarGrad)"/>
+  <!-- Director Lapel Collar Accent -->
+  <polygon points="100,126 88,146 112,146" fill="#a04444"/>
+  <circle cx="160" cy="45" r="16" fill="#25D366"/>
+  <!-- Checkmark / verified icon -->
+  <path d="M153 45 L158 50 L168 39" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#46627f"/>
+      <stop offset="100%" stop-color="#233547"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0e8f0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="url(#bg4)"/>
+  <circle cx="100" cy="80" r="34" fill="url(#avatarGrad4)"/>
+  <path d="M48 168 C48 128, 72 118, 100 118 C128 118, 152 128, 152 168 Z" fill="url(#avatarGrad4)"/>
+  <!-- ABA Growth Mind Badge -->
+  <circle cx="160" cy="45" r="16" fill="#c3daf0"/>
+  <path d="M155 46 C155 42, 158 39, 160 39 C162 39, 165 42, 165 46 C165 49, 155 52, 155 52" stroke="#233547" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

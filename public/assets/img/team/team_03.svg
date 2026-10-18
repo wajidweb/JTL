@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bf7932"/>
+      <stop offset="100%" stop-color="#734111"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fcedde"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="url(#bg3)"/>
+  <circle cx="100" cy="80" r="34" fill="url(#avatarGrad3)"/>
+  <path d="M48 168 C48 128, 72 118, 100 118 C128 118, 152 128, 152 168 Z" fill="url(#avatarGrad3)"/>
+  <!-- OT Motor Coordination Badge -->
+  <circle cx="160" cy="45" r="16" fill="#ffd8ad"/>
+  <circle cx="160" cy="45" r="6" fill="#734111"/>
+</svg>
