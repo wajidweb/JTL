@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   FaBars,
   FaXmark,
@@ -50,20 +51,19 @@ export default function Header() {
         <div className="container-fluid p-0">
           <div className="header__wrap ul_li_between glass">
             <div className="xb-header-logo">
-              <Link href="#hero" className="logo1" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <span
-                  style={{
-                    fontWeight: 800,
-                    fontSize: "clamp(16px, 3.8vw, 22px)",
-                    letterSpacing: "-0.5px",
-                    color: "#ffffff",
-                    textTransform: "uppercase",
-                    fontFamily: "var(--font-heading)",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Journey Towards Life
-                </span>
+              <Link
+                href="#hero"
+                className="logo1 jtl-header-logo-link"
+                aria-label="Journey Towards Life - Home"
+              >
+                <Image
+                  src="/assets/img/logo.png"
+                  alt="Journey Towards Life"
+                  width={64}
+                  height={64}
+                  priority
+                  className="jtl-header-logo-img"
+                />
               </Link>
             </div>
             <div className="main-menu__wrap navbar navbar-expand-xl p-0">
@@ -131,20 +131,19 @@ export default function Header() {
         <div className="container-fluid p-0">
           <div className="header__wrap ul_li_between glass">
             <div className="xb-header-logo">
-              <Link href="#hero" className="logo1" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <span
-                  style={{
-                    fontWeight: 800,
-                    fontSize: "clamp(16px, 3.8vw, 22px)",
-                    letterSpacing: "-0.5px",
-                    color: "#304049",
-                    textTransform: "uppercase",
-                    fontFamily: "var(--font-heading)",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Journey Towards Life
-                </span>
+              <Link
+                href="#hero"
+                className="logo1 jtl-header-logo-link"
+                aria-label="Journey Towards Life - Home"
+              >
+                <Image
+                  src="/assets/img/logo.png"
+                  alt="Journey Towards Life"
+                  width={64}
+                  height={64}
+                  priority
+                  className="jtl-header-logo-img"
+                />
               </Link>
             </div>
             <div className="main-menu__wrap navbar navbar-expand-xl p-0">
@@ -219,23 +218,22 @@ export default function Header() {
             >
               <FaXmark size={18} />
             </button>
-            <div className="xb-logo-mobile" style={{ padding: "10px 0 18px", borderBottom: "1px solid rgba(0,0,0,0.06)", marginBottom: "15px" }}>
-              <span
-                style={{
-                  fontWeight: 800,
-                  fontSize: "18px",
-                  color: "#304049",
-                  textTransform: "uppercase",
-                  display: "block",
-                  letterSpacing: "-0.3px",
-                }}
+            <div className="xb-logo-mobile">
+              <Link
+                href="#hero"
+                onClick={() => setMobileMenuOpen(false)}
+                className="jtl-drawer-logo-link"
+                aria-label="Journey Towards Life - Home"
               >
-                Journey Towards Life
-              </span>
-              <span style={{ fontSize: "12px", color: "#a04444", fontWeight: 600 }}>
-                Autism &amp; Special Education Centre
-              </span>
-            </div>
+                <Image
+                  src="/assets/img/logo.png"
+                  alt="Journey Towards Life"
+                  width={56}
+                  height={56}
+                  className="jtl-drawer-logo-img"
+                />
+              </Link>
+          </div>
 
             <nav className="xb-header-nav">
               <ul className="xb-menu-primary clearfix">
@@ -307,24 +305,24 @@ export default function Header() {
               <div className="mobile-drawer-contact-item">
                 <FaWhatsapp size={17} style={{ color: "#25D366" }} />
                 <div>
-                  <strong style={{ color: "#304049", fontSize: "12px", display: "block" }}>WhatsApp / Call:</strong>
+                  <strong style={{ color: "#ffffff", fontSize: "12px", display: "block" }}>WhatsApp / Call:</strong>
                   <a href="https://wa.me/923420000201" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", fontWeight: 700 }}>
                     0342 0000201
                   </a>
                 </div>
               </div>
               <div className="mobile-drawer-contact-item">
-                <FaPhone size={14} style={{ color: "#a04444" }} />
+                <FaPhone size={14} style={{ color: "#38bdf8" }} />
                 <div>
-                  <strong style={{ color: "#304049", fontSize: "12px", display: "block" }}>Other Contacts:</strong>
-                  <a href="tel:03709986381" style={{ color: "#304049" }}>0370 9986381</a> · <a href="tel:03479684918" style={{ color: "#304049" }}>0347 9684918</a>
+                  <strong style={{ color: "#ffffff", fontSize: "12px", display: "block" }}>Other Contacts:</strong>
+                  <a href="tel:03709986381" style={{ color: "#cbd5e1" }}>0370 9986381</a> · <a href="tel:03479684918" style={{ color: "#cbd5e1" }}>0347 9684918</a>
                 </div>
               </div>
               <div className="mobile-drawer-contact-item">
-                <FaLocationDot size={15} style={{ color: "#a04444" }} />
+                <FaLocationDot size={15} style={{ color: "#38bdf8" }} />
                 <div>
-                  <strong style={{ color: "#304049", fontSize: "12px", display: "block" }}>Location:</strong>
-                  <span>College Colony, Mingora, Swat</span>
+                  <strong style={{ color: "#ffffff", fontSize: "12px", display: "block" }}>Location:</strong>
+                  <span style={{ color: "#cbd5e1" }}>College Colony, Mingora, Swat</span>
                 </div>
               </div>
             </div>

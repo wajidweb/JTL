@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function WhyChooseUsSection() {
   return (
-    <section id="why-choose" className="funfact pos-rel z-1 radius-20 mt-30" style={{ backgroundColor: "rgb(160, 68, 68)" }}>
+    <section id="why-choose" className="funfact pos-rel z-1 radius-20 mt-30" style={{ background: "linear-gradient(145deg, #0e1144 0%, #08082e 100%)", border: "1px solid rgba(255, 255, 255, 0.08)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.35)" }}>
       <div className="container-fluid">
         <div className="row align-items-center">
           <div className="col-lg-6">

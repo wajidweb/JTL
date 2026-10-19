@@ -245,15 +245,15 @@ export default function VideosSection() {
             </div>
             <div className="jtl-video-modal-info">
               <span className="jtl-video-badge">{activeVideo.badge}</span>
-              <h4 style={{ color: "#304049", fontSize: "19px", fontWeight: 800, marginTop: "8px", marginBottom: "4px" }}>
+              <h4 style={{ color: "#ffffff", fontSize: "19px", fontWeight: 800, marginTop: "8px", marginBottom: "4px" }}>
                 {activeVideo.title}
               </h4>
               {activeVideo.speaker && (
-                <p style={{ color: "#a04444", fontSize: "14px", fontWeight: 700, marginBottom: "8px" }}>
+                <p style={{ color: "#38bdf8", fontSize: "14px", fontWeight: 700, marginBottom: "8px" }}>
                   {activeVideo.speaker} {activeVideo.role ? `· ${activeVideo.role}` : ""}
                 </p>
               )}
-              <p style={{ color: "#5d6d76", fontSize: "14.5px", lineHeight: "1.6", marginBottom: "16px" }}>
+              <p style={{ color: "#cbd5e1", fontSize: "14.5px", lineHeight: "1.6", marginBottom: "16px" }}>
                 {activeVideo.desc}
               </p>
               <Link

@@ -4,17 +4,42 @@ import Link from "next/link";
 export default function ServicesSection() {
   return (
     <section id="services" className="service pos-rel z-1 radius-20 mt-30 pt-130 pb-130 gradient-bg-2">
-      <div className="service-circle-shape">
-        <img src="/assets/img/shape/service_bg.png" alt="" />
-      </div>
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-lg-9">
             <div className="about-content text-center mb-55">
               <div className="sec-title">
-                <span className="xb-item--subtitle">Individualized Therapy and Learning</span>
-                <h2 className="xb-item--title mb-15">The Five Core Therapy and Special Education Services</h2>
-                <p className="xb-item--content">
+                <span
+                  className="xb-item--subtitle"
+                  style={{
+                    color: "#38bdf8",
+                    background: "rgba(56, 189, 248, 0.12)",
+                    border: "1px solid rgba(56, 189, 248, 0.25)",
+                    display: "inline-block",
+                    padding: "6px 20px",
+                    borderRadius: "6px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Individualized Therapy and Learning
+                </span>
+                <h2
+                  className="xb-item--title mb-15"
+                  style={{ color: "#ffffff", fontWeight: 700 }}
+                >
+                  The Five Core Therapy and{" "}
+                  <span style={{ color: "#38bdf8" }}>Special Education Services</span>
+                </h2>
+                <p
+                  className="xb-item--content"
+                  style={{
+                    color: "#cbd5e1",
+                    fontSize: "16.5px",
+                    lineHeight: "1.8",
+                    maxWidth: "760px",
+                    margin: "0 auto",
+                  }}
+                >
                   Every child&apos;s developmental path is unique. We replace rigid curricula with personalized therapy plans designed around your child&apos;s specific strengths, sensory needs, and learning pace.
                 </p>
               </div>
