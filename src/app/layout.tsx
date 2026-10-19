@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: "Journey Towards Life | Autism & Special Education Centre - Swat",
   description:
     "Journey Towards Life is an autism and special education centre established in 2021 in Mingora, Swat, KPK, Pakistan. Providing Speech Therapy, Occupational Therapy (OT), Behavioural Therapy (ABA), Sensory Management, and Special Education.",
+  icons: {
+    icon: [
+      { url: "/assets/img/logo.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/assets/img/logo.png",
+    shortcut: "/assets/img/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -24,6 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakartaSans.variable}>
       <head>
+        <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+        <link rel="apple-touch-icon" href="/assets/img/logo.png" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
