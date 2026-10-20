@@ -2,67 +2,66 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaPlay, FaXmark, FaWhatsapp, FaArrowRight } from "react-icons/fa6";
+import { FaPlay, FaXmark, FaWhatsapp, FaArrowRight, FaUser } from "react-icons/fa6";
+
+interface VideoItem {
+  id: number;
+  category: "Session" | "Family";
+  title: string;
+  badge: string;
+  description: string;
+  parent_name?: string;
+  video_type: "upload" | "link";
+  video_url: string;
+  thumbnail_url?: string;
+  display_order?: number;
+}
+
+function getYouTubeEmbedUrl(url: string) {
+  if (!url) return "";
+  const match = url.match(
+    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i
+  );
+  if (match && match[1]) {
+    return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1&rel=0`;
+  }
+  return url;
+}
 
 export default function VideosSection() {
-  const [activeVideo, setActiveVideo] = useState<{
-    title: string;
-    speaker?: string;
-    role?: string;
-    badge: string;
-    desc: string;
-    youtubeId: string;
-  } | null>(null);
+  const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const sessionVideos = [
-    {
-      id: 1,
-      title: "Speech Therapy Session",
-      badge: "Clinical Session",
-      youtubeId: "2Tcb_thFmsk",
-      image: "https://img.youtube.com/vi/2Tcb_thFmsk/hqdefault.jpg",
-      desc: "Inside a one to one speech therapy session focusing on sound articulation, vocabulary expansion, and social communication.",
-    },
-    {
-      id: 2,
-      title: "Occupational Therapy Session",
-      badge: "Clinical Session",
-      youtubeId: "opo5-drYiG0",
-      image: "https://img.youtube.com/vi/opo5-drYiG0/hqdefault.jpg",
-      desc: "Observing motor play, hand eye coordination exercises, and sensory calming strategies tailored for everyday routines.",
-    },
-    {
-      id: 3,
-      title: "Special Education Class",
-      badge: "Classroom Learning",
-      youtubeId: "PZToq5MSP9k",
-      image: "https://img.youtube.com/vi/PZToq5MSP9k/hqdefault.jpg",
-      desc: "A supportive classroom setting highlighting adaptive teaching tools, individualized education plans, and peer engagement.",
-    },
-  ];
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
-  const familyVideos = [
-    {
-      id: 4,
-      title: "Parent Testimonial",
-      speaker: "[PARENT NAME]",
-      role: "Mother of a child in Speech Therapy",
-      badge: "Family Story",
-      youtubeId: "XdaiHxplAyE",
-      image: "https://img.youtube.com/vi/XdaiHxplAyE/hqdefault.jpg",
-      desc: "Sharing her family journey, discovering early support at Journey Towards Life, and witnessing her child communicate with newfound confidence.",
-    },
-    {
-      id: 5,
-      title: "Parent Testimonial",
-      speaker: "[PARENT NAME]",
-      role: "Father of a child in Behavioural Therapy",
-      badge: "Family Story",
-      youtubeId: "bu8RS_aJ_Pk",
-      image: "https://img.youtube.com/vi/bu8RS_aJ_Pk/hqdefault.jpg",
-      desc: "Reflecting on positive behavioural guidance, practical home coaching, and the transformation in his child daily life routines.",
-    },
-  ];
+  // Load dynamic videos strictly from the backend
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadVideos() {
+      try {
+        const res = await fetch(`${API_BASE}/videos`);
+        const json = await res.json();
+        if (!ignore && res.ok && json.success && Array.isArray(json.data)) {
+          setVideos(json.data);
+        }
+      } catch (err) {
+        console.error("Error fetching videos from backend:", err);
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadVideos();
+
+    return () => {
+      ignore = true;
+    };
+  }, [API_BASE]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -80,6 +79,9 @@ export default function VideosSection() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeVideo]);
+
+  const sessionVideos = videos.filter((v) => v.category === "Session");
+  const familyVideos = videos.filter((v) => v.category === "Family");
 
   return (
     <section id="videos" className="jtl-videos-section pos-rel z-1 gradient-bg radius-20 mt-30">
@@ -100,93 +102,168 @@ export default function VideosSection() {
           </div>
         </div>
 
-        {/* 1. Watch Our Sessions Subsection */}
-        <div className="jtl-video-category-header">
-          <h3 className="jtl-video-category-title">
-            <span className="cat-dot"></span>
-            Watch our sessions
-          </h3>
-        </div>
-
-        <div className="jtl-video-sessions-grid">
-          {sessionVideos.map((item) => (
+        {/* Loading Spinner */}
+        {isLoading ? (
+          <div style={{ textAlign: "center", padding: "60px 20px" }}>
             <div
-              key={item.id}
-              className="jtl-video-card"
-              onClick={() => setActiveVideo(item)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setActiveVideo(item);
+              style={{
+                width: "42px",
+                height: "42px",
+                border: "3px solid rgba(230, 158, 1, 0.2)",
+                borderTopColor: "var(--admin-gold, #e69e01)",
+                borderRadius: "50%",
+                animation: "spin 0.75s linear infinite",
+                margin: "0 auto 16px",
               }}
-              aria-label={`Watch ${item.title}`}
+            />
+            <p style={{ color: "#ffffff", opacity: 0.85, fontSize: "14px" }}>
+              Loading video sessions and family stories...
+            </p>
+          </div>
+        ) : videos.length === 0 ? (
+          /* Empty State */
+          <div
+            style={{
+              textAlign: "center",
+              padding: "50px 20px",
+              background: "rgba(255, 255, 255, 0.03)",
+              borderRadius: "18px",
+              border: "1px dashed rgba(255, 255, 255, 0.15)",
+              maxWidth: "600px",
+              margin: "0 auto 30px",
+            }}
+          >
+            <p style={{ color: "#ffffff", opacity: 0.85, fontSize: "15px", marginBottom: "18px" }}>
+              Our clinical session videos and parent stories are being uploaded. Reach out for a live session overview.
+            </p>
+            <Link
+              href="https://wa.me/923420000201"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="thm-btn thm-btn--whatsapp"
+              style={{ display: "inline-flex" }}
             >
-              <div className="jtl-video-thumb-wrap">
-                <img src={item.image} alt={item.title} />
-                <div className="jtl-video-play-btn">
-                  <FaPlay size={18} />
+              <span>Consult On WhatsApp: 0342 0000201</span>
+            </Link>
+          </div>
+        ) : (
+          <>
+            {/* 1. Watch Our Sessions Subsection */}
+            {sessionVideos.length > 0 && (
+              <>
+                <div className="jtl-video-category-header">
+                  <h3 className="jtl-video-category-title">
+                    <span className="cat-dot"></span>
+                    Watch our sessions
+                  </h3>
                 </div>
-              </div>
-              <div className="jtl-video-body">
-                <span className="jtl-video-badge">{item.badge}</span>
-                <h4 className="jtl-video-title">{item.title}</h4>
-                <p className="jtl-video-desc">{item.desc}</p>
-                <span className="jtl-video-watch-link">
-                  <span>Watch Video Session</span>
-                  <FaArrowRight size={13} />
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
 
-        {/* 2. Hear It From Our Families Subsection */}
-        <div className="jtl-video-category-header">
-          <h3 className="jtl-video-category-title">
-            <span className="cat-dot" style={{ backgroundColor: "#2d7082" }}></span>
-            Hear it from our families
-          </h3>
-        </div>
+                <div className="jtl-video-sessions-grid mb-40">
+                  {sessionVideos.map((item) => {
+                    const thumb = item.thumbnail_url
+                      ? item.thumbnail_url.startsWith("http")
+                        ? item.thumbnail_url
+                        : `${BACKEND_URL}${item.thumbnail_url}`
+                      : "/assets/img/hero/hero_img.jpeg";
 
-        <div className="jtl-video-testimonials-grid">
-          {familyVideos.map((item) => (
-            <div
-              key={item.id}
-              className="jtl-video-card"
-              onClick={() => setActiveVideo(item)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setActiveVideo(item);
-              }}
-              aria-label={`Watch ${item.title} by ${item.speaker}`}
-            >
-              <div className="jtl-video-thumb-wrap">
-                <img src={item.image} alt={`${item.title} ${item.speaker}`} />
-                <div className="jtl-video-play-btn">
-                  <FaPlay size={18} />
+                    return (
+                      <div
+                        key={item.id}
+                        className="jtl-video-card"
+                        onClick={() => setActiveVideo(item)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") setActiveVideo(item);
+                        }}
+                        aria-label={`Watch ${item.title}`}
+                      >
+                        <div className="jtl-video-thumb-wrap">
+                          <img src={thumb} alt={item.title} />
+                          <div className="jtl-video-play-btn">
+                            <FaPlay size={18} />
+                          </div>
+                        </div>
+                        <div className="jtl-video-body">
+                          <span className="jtl-video-badge">{item.badge}</span>
+                          <h4 className="jtl-video-title">{item.title}</h4>
+                          <p className="jtl-video-desc">{item.description}</p>
+                          <span className="jtl-video-watch-link">
+                            <span>Watch Video Session</span>
+                            <FaArrowRight size={13} />
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-              <div className="jtl-video-body">
-                <span
-                  className="jtl-video-badge"
-                  style={{ color: "#2d7082", background: "rgba(45, 112, 130, 0.08)" }}
-                >
-                  {item.badge}
-                </span>
-                <h4 className="jtl-video-title">{item.title}</h4>
-                <p className="jtl-video-speaker">
-                  {item.speaker} · {item.role}
-                </p>
-                <p className="jtl-video-desc">{item.desc}</p>
-                <span className="jtl-video-watch-link" style={{ color: "#2d7082" }}>
-                  <span>Listen to Family Story</span>
-                  <FaArrowRight size={13} />
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+              </>
+            )}
+
+            {/* 2. Hear It From Our Families Subsection */}
+            {familyVideos.length > 0 && (
+              <>
+                <div className="jtl-video-category-header">
+                  <h3 className="jtl-video-category-title">
+                    <span className="cat-dot" style={{ backgroundColor: "#2d7082" }}></span>
+                    Hear it from our families
+                  </h3>
+                </div>
+
+                <div className="jtl-video-testimonials-grid">
+                  {familyVideos.map((item) => {
+                    const thumb = item.thumbnail_url
+                      ? item.thumbnail_url.startsWith("http")
+                        ? item.thumbnail_url
+                        : `${BACKEND_URL}${item.thumbnail_url}`
+                      : "/assets/img/hero/hero_img.jpeg";
+
+                    return (
+                      <div
+                        key={item.id}
+                        className="jtl-video-card"
+                        onClick={() => setActiveVideo(item)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") setActiveVideo(item);
+                        }}
+                        aria-label={`Watch ${item.title} ${item.parent_name ? `by ${item.parent_name}` : ""}`}
+                      >
+                        <div className="jtl-video-thumb-wrap">
+                          <img src={thumb} alt={item.title} />
+                          <div className="jtl-video-play-btn">
+                            <FaPlay size={18} />
+                          </div>
+                        </div>
+                        <div className="jtl-video-body">
+                          <span
+                            className="jtl-video-badge"
+                            style={{ color: "#38bdf8", background: "rgba(56, 189, 248, 0.12)" }}
+                          >
+                            {item.badge}
+                          </span>
+                          <h4 className="jtl-video-title">{item.title}</h4>
+                          {item.parent_name && (
+                            <p className="jtl-video-speaker" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                              <FaUser size={12} style={{ color: "var(--admin-gold)" }} />
+                              <span>{item.parent_name}</span>
+                            </p>
+                          )}
+                          <p className="jtl-video-desc">{item.description}</p>
+                          <span className="jtl-video-watch-link" style={{ color: "#38bdf8" }}>
+                            <span>Listen to Family Story</span>
+                            <FaArrowRight size={13} />
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </>
+        )}
 
         {/* Section Footer WhatsApp CTA */}
         <div className="text-center mt-30">
@@ -208,7 +285,7 @@ export default function VideosSection() {
         </div>
       </div>
 
-      {/* Video Modal Player with Live YouTube Embed */}
+      {/* Video Modal Player (Positioned below navbar) */}
       {activeVideo && (
         <div
           className="jtl-video-modal-backdrop"
@@ -230,31 +307,51 @@ export default function VideosSection() {
               >
                 <FaXmark size={18} />
               </button>
-              <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
-                title={activeVideo.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                  display: "block",
-                }}
-              />
+
+              {activeVideo.video_type === "upload" ? (
+                <video
+                  src={
+                    activeVideo.video_url.startsWith("http")
+                      ? activeVideo.video_url
+                      : `${BACKEND_URL}${activeVideo.video_url}`
+                  }
+                  controls
+                  autoPlay
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    background: "#000000",
+                  }}
+                />
+              ) : (
+                <iframe
+                  src={getYouTubeEmbedUrl(activeVideo.video_url)}
+                  title={activeVideo.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    display: "block",
+                  }}
+                />
+              )}
             </div>
+
             <div className="jtl-video-modal-info">
               <span className="jtl-video-badge">{activeVideo.badge}</span>
               <h4 style={{ color: "#ffffff", fontSize: "19px", fontWeight: 800, marginTop: "8px", marginBottom: "4px" }}>
                 {activeVideo.title}
               </h4>
-              {activeVideo.speaker && (
+              {activeVideo.parent_name && (
                 <p style={{ color: "#38bdf8", fontSize: "14px", fontWeight: 700, marginBottom: "8px" }}>
-                  {activeVideo.speaker} {activeVideo.role ? `· ${activeVideo.role}` : ""}
+                  {activeVideo.parent_name}
                 </p>
               )}
               <p style={{ color: "#cbd5e1", fontSize: "14.5px", lineHeight: "1.6", marginBottom: "16px" }}>
-                {activeVideo.desc}
+                {activeVideo.description}
               </p>
               <Link
                 href="https://wa.me/923420000201"

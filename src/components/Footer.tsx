@@ -197,7 +197,18 @@ export default function Footer() {
         {/* 3. Bottom Full-Width Bar */}
         <div className="jtl-footer-bottom">
           <div className="jtl-footer-copyright">
-            Copyright © 2026 Journey Towards Life. All Rights Reserved.
+            Copyright © 2026 Journey Towards Life. All Rights Reserved. ·{" "}
+            <Link
+              href="/admin/login"
+              style={{
+                color: "rgba(255, 255, 255, 0.6)",
+                textDecoration: "underline",
+                fontSize: "13px",
+                transition: "color 0.2s ease",
+              }}
+            >
+              Admin Portal
+            </Link>
           </div>
 
           <div className="jtl-footer-developer">

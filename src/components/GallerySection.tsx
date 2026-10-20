@@ -4,35 +4,53 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { FaWhatsapp, FaXmark, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
+interface GalleryImage {
+  id: number;
+  src: string;
+  alt: string;
+}
+
 export default function GallerySection() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const galleryImages = [
-    {
-      src: "/assets/img/gallery/one.jpg",
-      alt: "Sensory room and calming activities",
-    },
-    {
-      src: "/assets/img/gallery/two.jpg",
-      alt: "Speech and language therapy session",
-    },
-    {
-      src: "/assets/img/gallery/three.jpg",
-      alt: "Motor coordination and active play",
-    },
-    {
-      src: "/assets/img/gallery/four.jpg",
-      alt: "Adaptive learning and educational tools",
-    },
-    {
-      src: "/assets/img/gallery/five.jpg",
-      alt: "Social skills and classroom interaction",
-    },
-    {
-      src: "/assets/img/gallery/six.jpg",
-      alt: "Parent consultation and therapy guidance",
-    },
-  ];
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const BACKEND_URL = API_BASE.replace(/\/api$/, "");
+
+  // Load dynamic gallery images strictly from backend
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadGallery() {
+      try {
+        const res = await fetch(`${API_BASE}/gallery`);
+        const json = await res.json();
+        if (!ignore && res.ok && json.success && Array.isArray(json.data)) {
+          const mapped = json.data.map((item: { id: number; image_url: string; title: string }) => ({
+            id: item.id,
+            src: item.image_url.startsWith("http")
+              ? item.image_url
+              : `${BACKEND_URL}${item.image_url}`,
+            alt: item.title,
+          }));
+          setImages(mapped);
+        }
+      } catch (err) {
+        console.error("Gallery fetch error:", err);
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadGallery();
+
+    return () => {
+      ignore = true;
+    };
+  }, [API_BASE, BACKEND_URL]);
 
   const closeLightbox = () => {
     setLightboxIndex(null);
@@ -42,22 +60,20 @@ export default function GallerySection() {
     (e?: React.MouseEvent) => {
       if (e) e.stopPropagation();
       setLightboxIndex((prev) =>
-        prev !== null ? (prev + 1) % galleryImages.length : null
+        prev !== null ? (prev + 1) % images.length : null
       );
     },
-    [galleryImages.length]
+    [images.length]
   );
 
   const prevImage = useCallback(
     (e?: React.MouseEvent) => {
       if (e) e.stopPropagation();
       setLightboxIndex((prev) =>
-        prev !== null
-          ? (prev - 1 + galleryImages.length) % galleryImages.length
-          : null
+        prev !== null ? (prev - 1 + images.length) % images.length : null
       );
     },
-    [galleryImages.length]
+    [images.length]
   );
 
   // Keyboard navigation & body scroll lock
@@ -102,26 +118,78 @@ export default function GallerySection() {
           </div>
         </div>
 
-        {/* Clean Responsive Image Grid */}
-        <div className="jtl-gallery-grid">
-          {galleryImages.map((img, idx) => (
+        {/* Loading Spinner */}
+        {isLoading ? (
+          <div style={{ textAlign: "center", padding: "60px 20px" }}>
             <div
-              key={idx}
-              className="jtl-gallery-card"
-              onClick={() => setLightboxIndex(idx)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  setLightboxIndex(idx);
-                }
+              style={{
+                width: "42px",
+                height: "42px",
+                border: "3px solid rgba(230, 158, 1, 0.2)",
+                borderTopColor: "var(--admin-gold, #e69e01)",
+                borderRadius: "50%",
+                animation: "spin 0.75s linear infinite",
+                margin: "0 auto 16px",
               }}
-              aria-label={`View full image: ${img.alt}`}
+            />
+            <p style={{ color: "#ffffff", opacity: 0.85, fontSize: "14px" }}>
+              Loading gallery moments...
+            </p>
+          </div>
+        ) : images.length === 0 ? (
+          /* Empty Database State */
+          <div
+            style={{
+              textAlign: "center",
+              padding: "50px 20px",
+              background: "rgba(255, 255, 255, 0.03)",
+              borderRadius: "18px",
+              border: "1px dashed rgba(255, 255, 255, 0.15)",
+              maxWidth: "600px",
+              margin: "0 auto",
+            }}
+          >
+            <p style={{ color: "#ffffff", opacity: 0.85, fontSize: "15px", marginBottom: "18px" }}>
+              New facility and therapy moments are being updated. Connect with our team for centre visits and tours.
+            </p>
+            <Link
+              href="https://wa.me/923420000201"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="thm-btn thm-btn--whatsapp"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "14px 28px",
+              }}
             >
-              <img src={img.src} alt={img.alt} />
-            </div>
-          ))}
-        </div>
+              <FaWhatsapp size={20} />
+              <span>Connect On WhatsApp: 0342 0000201</span>
+            </Link>
+          </div>
+        ) : (
+          /* Live Gallery Grid */
+          <div className="jtl-gallery-grid">
+            {images.map((img, idx) => (
+              <div
+                key={img.id || idx}
+                className="jtl-gallery-card"
+                onClick={() => setLightboxIndex(idx)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setLightboxIndex(idx);
+                  }
+                }}
+                aria-label={`View full image: ${img.alt}`}
+              >
+                <img src={img.src} alt={img.alt} />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Action Button */}
         <div className="text-center mt-35">
@@ -143,8 +211,8 @@ export default function GallerySection() {
         </div>
       </div>
 
-      {/* Full-Screen Lightbox Modal */}
-      {lightboxIndex !== null && (
+      {/* Full-Screen Lightbox Modal positioned cleanly below navbar */}
+      {lightboxIndex !== null && images[lightboxIndex] && (
         <div
           className="jtl-lightbox-backdrop"
           onClick={closeLightbox}
@@ -166,38 +234,39 @@ export default function GallerySection() {
             </button>
 
             {/* Previous button */}
-            <button
-              type="button"
-              className="jtl-lightbox-nav jtl-lightbox-prev"
-              onClick={prevImage}
-              aria-label="Previous image"
-            >
-              <FaChevronLeft size={20} />
-            </button>
+            {images.length > 1 && (
+              <button
+                type="button"
+                className="jtl-lightbox-nav jtl-lightbox-prev"
+                onClick={prevImage}
+                aria-label="Previous image"
+              >
+                <FaChevronLeft size={20} />
+              </button>
+            )}
 
             {/* Image Box */}
             <div className="jtl-lightbox-img-box">
               <img
-                src={galleryImages[lightboxIndex].src}
-                alt={galleryImages[lightboxIndex].alt}
+                src={images[lightboxIndex].src}
+                alt={images[lightboxIndex].alt}
               />
-              <div className="jtl-lightbox-caption">
-                <span>{galleryImages[lightboxIndex].alt}</span>
-                <span className="jtl-lightbox-counter">
-                  {lightboxIndex + 1} / {galleryImages.length}
-                </span>
-              </div>
+              <p className="jtl-lightbox-caption">
+                {images[lightboxIndex].alt}
+              </p>
             </div>
 
             {/* Next button */}
-            <button
-              type="button"
-              className="jtl-lightbox-nav jtl-lightbox-next"
-              onClick={nextImage}
-              aria-label="Next image"
-            >
-              <FaChevronRight size={20} />
-            </button>
+            {images.length > 1 && (
+              <button
+                type="button"
+                className="jtl-lightbox-nav jtl-lightbox-next"
+                onClick={nextImage}
+                aria-label="Next image"
+              >
+                <FaChevronRight size={20} />
+              </button>
+            )}
           </div>
         </div>
       )}

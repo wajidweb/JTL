@@ -2209,7 +2209,7 @@
 }
 .qbxr .thm-btn span  {
   position: relative;
-  margin-left: -34px;
+  margin-left: 0;
   transition: 0.3s;
 }
 .qbxr .thm-btn--primary  {
@@ -3451,6 +3451,24 @@
   content: none !important;
 }
 
+/* Team Section WhatsApp Button Alignment */
+.qbxr .team-section .thm-btn {
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 16px 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.qbxr .team-section .thm-btn span {
+  margin-left: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
 /* ==========================================================================
    Redesigned Full-Width Footer
    ========================================================================== */
@@ -4269,14 +4287,18 @@
 
 .qbxr .jtl-lightbox-backdrop {
   position: fixed;
-  inset: 0;
-  background: rgba(14, 23, 29, 0.94);
-  backdrop-filter: blur(10px);
-  z-index: 10000;
+  top: 90px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 90px);
+  background: rgba(8, 8, 46, 0.96);
+  backdrop-filter: blur(12px);
+  z-index: 999999 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px 20px 24px;
   animation: jtlFadeIn 0.25s ease forwards;
 }
 
@@ -4292,7 +4314,7 @@
 .qbxr .jtl-lightbox-content {
   position: relative;
   max-width: 95vw;
-  max-height: 92vh;
+  max-height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4303,12 +4325,12 @@
   flex-direction: column;
   align-items: center;
   max-width: 100%;
-  max-height: 88vh;
+  max-height: calc(100vh - 130px);
 }
 
 .qbxr .jtl-lightbox-img-box img {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: calc(100vh - 190px);
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
@@ -4334,13 +4356,13 @@
 
 .qbxr .jtl-lightbox-close {
   position: absolute;
-  top: -45px;
-  right: -5px;
+  top: -42px;
+  right: 0px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -4389,8 +4411,12 @@
 }
 
 @media (max-width: 991px) {
+  .qbxr .jtl-lightbox-backdrop {
+    top: 75px;
+    height: calc(100vh - 75px);
+  }
   .qbxr .jtl-lightbox-close {
-    top: -42px;
+    top: -40px;
     right: 0px;
   }
   .qbxr .jtl-lightbox-prev {
@@ -4669,15 +4695,27 @@
 /* Video Modal */
 .qbxr .jtl-video-modal-backdrop {
   position: fixed;
-  inset: 0;
-  background: rgba(8, 8, 46, 0.95);
+  top: 90px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 90px);
+  background: rgba(8, 8, 46, 0.96);
   backdrop-filter: blur(12px);
-  z-index: 10000;
+  z-index: 999999 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px 20px 24px;
+  overflow-y: auto;
   animation: jtlFadeIn 0.25s ease forwards;
+}
+
+@media (max-width: 991px) {
+  .qbxr .jtl-video-modal-backdrop {
+    top: 75px;
+    height: calc(100vh - 75px);
+  }
 }
 
 .qbxr .jtl-video-modal-content {
