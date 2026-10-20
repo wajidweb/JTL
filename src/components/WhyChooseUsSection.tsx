@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export default function WhyChooseUsSection() {
   return (
@@ -11,14 +12,22 @@ export default function WhyChooseUsSection() {
               <div className="funfact-image-inner">
                 {["01", "02", "03", "04", "01", "02", "03", "04"].map((img, i) => (
                   <div className="xb-item--img" key={`ff-col1-${i}`}>
-                    <img src={`/assets/img/funfact/ff_${img}.png`} alt="JTL Activities" />
+                    <img
+                      src={`/assets/img/funfact/ff_${img}.png`}
+                      alt="Journey Towards Life therapy activity and learning in Swat"
+                      loading="lazy"
+                    />
                   </div>
                 ))}
               </div>
               <div className="funfact-image-inner marquee-2">
                 {["05", "06", "07", "08", "05", "06", "07", "08"].map((img, i) => (
                   <div className="xb-item--img" key={`ff-col2-${i}`}>
-                    <img src={`/assets/img/funfact/ff_${img}.png`} alt="JTL Sessions" />
+                    <img
+                      src={`/assets/img/funfact/ff_${img}.png`}
+                      alt="Special education and sensory development session at JTL Mingora"
+                      loading="lazy"
+                    />
                   </div>
                 ))}
               </div>
@@ -96,7 +105,7 @@ export default function WhyChooseUsSection() {
 
               <div className="funfact-btn mt-50">
                 <Link
-                  href="https://wa.me/923420000201"
+                  href={siteConfig.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="thm-btn"

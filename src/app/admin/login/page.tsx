@@ -13,6 +13,7 @@ import {
   FaArrowRight,
   FaCircleExclamation,
 } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
@@ -51,7 +52,7 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+      const apiUrl = siteConfig.apiUrl;
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: "POST",
         headers: {

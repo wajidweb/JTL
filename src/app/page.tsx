@@ -7,6 +7,7 @@ import {
   AboutSection,
   ServicesSection,
   WhyChooseUsSection,
+  FaqSection,
   GallerySection,
   VideosSection,
   TeamSection,
@@ -49,6 +50,9 @@ export default function Home() {
 
             {/* Our Team Section */}
             <TeamSection />
+
+            {/* Frequently Asked Questions */}
+            <FaqSection />
           </main>
         </div>
       </div>

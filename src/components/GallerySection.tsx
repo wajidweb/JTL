@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { FaWhatsapp, FaXmark, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 interface GalleryImage {
   id: number;
@@ -15,7 +16,7 @@ export default function GallerySection() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const API_BASE = siteConfig.apiUrl;
   const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
   // Load dynamic gallery images strictly from backend
@@ -153,7 +154,7 @@ export default function GallerySection() {
               New facility and therapy moments are being updated. Connect with our team for centre visits and tours.
             </p>
             <Link
-              href="https://wa.me/923420000201"
+              href={siteConfig.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="thm-btn thm-btn--whatsapp"
@@ -165,7 +166,7 @@ export default function GallerySection() {
               }}
             >
               <FaWhatsapp size={20} />
-              <span>Connect On WhatsApp: 0342 0000201</span>
+              <span>Connect On WhatsApp: {siteConfig.whatsappNumber}</span>
             </Link>
           </div>
         ) : (
@@ -194,7 +195,7 @@ export default function GallerySection() {
         {/* Action Button */}
         <div className="text-center mt-35">
           <Link
-            href="https://wa.me/923420000201"
+            href={siteConfig.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="thm-btn thm-btn--whatsapp"
@@ -206,7 +207,7 @@ export default function GallerySection() {
             }}
           >
             <FaWhatsapp size={20} />
-            <span>Connect With Our Team On WhatsApp: 0342 0000201</span>
+            <span>Connect With Our Team On WhatsApp: {siteConfig.whatsappNumber}</span>
           </Link>
         </div>
       </div>

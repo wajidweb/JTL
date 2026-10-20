@@ -50,7 +50,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     return <>{children}</>;
   }
 
-  // If unauthenticated, hide dashboard completely
+  // If unauthenticated, show spinner while keeping children in the tree to allow Next.js segment validation
   if (!token) {
     return (
       <div
@@ -68,6 +68,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <span style={{ fontSize: "14px", opacity: 0.85 }}>
             Authenticating administrator session...
           </span>
+        </div>
+        <div style={{ display: "none" }} aria-hidden="true">
+          {children}
         </div>
       </div>
     );

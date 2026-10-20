@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export default function HeroSection() {
   return (
@@ -19,15 +20,15 @@ export default function HeroSection() {
                 <span className="xb-item--subtitle wow fadeInUp" style={{ visibility: "visible" }}>
                   Autism and Special Education Centre · Mingora, Swat
                 </span>
-                <h2 className="xb-item--title wow fadeInUp" style={{ visibility: "visible" }}>
+                <h1 className="xb-item--title wow fadeInUp" style={{ visibility: "visible" }}>
                   Helping Every Child Communicate, Learn, and Step Confidently into Life.
-                </h2>
+                </h1>
                 <p className="xb-item--content wow fadeInUp" style={{ visibility: "visible" }}>
                   Every child holds unique strengths waiting to be unlocked. We provide personalized therapies, sensory support, and adaptive learning, partnering with families to turn daily challenges into proud milestones.
                 </p>
                 <div className="hero-btn wow fadeInUp" style={{ visibility: "visible" }}>
                   <Link
-                    href="https://maps.app.goo.gl/tCBshiyu1gugG8Xt8"
+                    href={siteConfig.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="thm-btn"
@@ -35,12 +36,12 @@ export default function HeroSection() {
                     <span>Get Directions</span>
                   </Link>
                   <Link
-                    href="https://wa.me/923420000201"
+                    href={siteConfig.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="thm-btn thm-btn--whatsapp"
                   >
-                    <span>WhatsApp: 0342 0000201</span>
+                    <span>WhatsApp: {siteConfig.whatsappNumber}</span>
                   </Link>
                 </div>
               </div>

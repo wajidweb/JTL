@@ -13,6 +13,7 @@ import {
   FaCircleExclamation,
   FaArrowRotateRight,
 } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 interface GalleryItem {
   id: number;
@@ -44,7 +45,7 @@ export default function AdminGalleryPage() {
   // Edit Form State
   const [editTitle, setEditTitle] = useState("");
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const API_BASE = siteConfig.apiUrl;
   const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
   const showToast = (msg: string) => {

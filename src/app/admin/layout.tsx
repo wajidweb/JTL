@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Management and Administration Portal for Journey Towards Life Autism & Special Education Centre.",
 };
 
+export const instant = false;
+
 export default function AdminLayout({
   children,
 }: Readonly<{

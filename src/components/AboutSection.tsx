@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export default function AboutSection() {
   const pillars = [
@@ -42,7 +43,7 @@ export default function AboutSection() {
 
               <div style={{ marginTop: "25px", marginBottom: "45px" }}>
                 <Link
-                  href="https://wa.me/923420000201"
+                  href={siteConfig.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="thm-btn"
@@ -54,10 +55,26 @@ export default function AboutSection() {
           </div>
         </div>
         <div className="about-image text-center">
-          <img src="/assets/img/about/about_img1.jpeg" alt="Person Centred Support" />
-          <img src="/assets/img/about/about_img2.png" alt="One to One Therapy" />
-          <img src="/assets/img/about/about_img03.jpg" alt="Parent Guidance" />
-          <img src="/assets/img/about/about_img04.jpg" alt="Skill Development" />
+          <img
+            src="/assets/img/about/about_img1.jpeg"
+            alt="Children receiving person-centred support at Journey Towards Life Autism Centre in Swat"
+            loading="lazy"
+          />
+          <img
+            src="/assets/img/about/about_img2.png"
+            alt="One-to-one speech and occupational therapy session at JTL Mingora"
+            loading="lazy"
+          />
+          <img
+            src="/assets/img/about/about_img03.jpg"
+            alt="Parent guidance and developmental coaching at Journey Towards Life Centre"
+            loading="lazy"
+          />
+          <img
+            src="/assets/img/about/about_img04.jpg"
+            alt="Sensory regulation and skill development for special needs children in Swat"
+            loading="lazy"
+          />
         </div>
       </div>
 

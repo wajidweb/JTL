@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export default function ServicesSection() {
   return (
@@ -127,7 +128,7 @@ export default function ServicesSection() {
 
         <div className="service-btn text-center mt-75">
           <Link
-            href="https://wa.me/923420000201"
+            href={siteConfig.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="thm-btn thm-btn--primary"

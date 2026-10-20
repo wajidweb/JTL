@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaPlay, FaXmark, FaWhatsapp, FaArrowRight, FaUser } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 interface VideoItem {
   id: number;
@@ -33,7 +34,7 @@ export default function VideosSection() {
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const API_BASE = siteConfig.apiUrl;
   const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
   // Load dynamic videos strictly from the backend
@@ -137,13 +138,13 @@ export default function VideosSection() {
               Our clinical session videos and parent stories are being uploaded. Reach out for a live session overview.
             </p>
             <Link
-              href="https://wa.me/923420000201"
+              href={siteConfig.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="thm-btn thm-btn--whatsapp"
               style={{ display: "inline-flex" }}
             >
-              <span>Consult On WhatsApp: 0342 0000201</span>
+              <span>Consult On WhatsApp: {siteConfig.whatsappNumber}</span>
             </Link>
           </div>
         ) : (
@@ -268,7 +269,7 @@ export default function VideosSection() {
         {/* Section Footer WhatsApp CTA */}
         <div className="text-center mt-30">
           <Link
-            href="https://wa.me/923420000201"
+            href={siteConfig.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="thm-btn thm-btn--whatsapp"
@@ -280,7 +281,7 @@ export default function VideosSection() {
             }}
           >
             <FaWhatsapp size={20} />
-            <span>Connect With Our Specialists On WhatsApp: 0342 0000201</span>
+            <span>Connect With Our Specialists On WhatsApp: {siteConfig.whatsappNumber}</span>
           </Link>
         </div>
       </div>
@@ -354,7 +355,7 @@ export default function VideosSection() {
                 {activeVideo.description}
               </p>
               <Link
-                href="https://wa.me/923420000201"
+                href={siteConfig.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="jtl-btn-whatsapp"

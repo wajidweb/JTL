@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 interface TeamMember {
   id: number;
@@ -20,7 +21,7 @@ export default function TeamSection() {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const API_BASE = siteConfig.apiUrl;
   const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
   // Fetch dynamic team members strictly from the backend
@@ -105,7 +106,7 @@ export default function TeamSection() {
               Specialist profiles are being updated. Please connect with our director for direct consultations.
             </p>
             <Link
-              href="https://wa.me/923420000201"
+              href={siteConfig.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="thm-btn thm-btn--dark"
@@ -118,7 +119,7 @@ export default function TeamSection() {
               }}
             >
               <span style={{ marginLeft: 0, whiteSpace: "nowrap" }}>
-                Consult On WhatsApp: 0342 0000201
+                Consult On WhatsApp: {siteConfig.whatsappNumber}
               </span>
             </Link>
           </div>
@@ -138,7 +139,7 @@ export default function TeamSection() {
                 ? member.skills.split(",").map((s) => s.trim()).filter(Boolean)
                 : [];
 
-              const rawWhatsApp = member.whatsapp_number || "03420000201";
+              const rawWhatsApp = member.whatsapp_number || siteConfig.whatsappNumber;
               const digitsOnly = rawWhatsApp.replace(/[^0-9]/g, "");
               const waLink = digitsOnly.startsWith("92")
                 ? `https://wa.me/${digitsOnly}`
@@ -216,7 +217,7 @@ export default function TeamSection() {
 
         <div className="text-center mt-55">
           <Link
-            href="https://wa.me/923420000201"
+            href={siteConfig.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="thm-btn thm-btn--dark"

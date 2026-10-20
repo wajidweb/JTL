@@ -7,9 +7,9 @@ import {
   FaUserDoctor,
   FaAngleRight,
   FaFacebook,
-  FaInstagram,
-  FaLinkedin,
+  FaYoutube,
 } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 export default function Footer() {
   return (
@@ -28,17 +28,17 @@ export default function Footer() {
           </div>
           <div className="jtl-footer-cta-actions">
             <Link
-              href="https://wa.me/923420000201"
+              href={siteConfig.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="jtl-btn-whatsapp"
             >
               <FaWhatsapp size={20} />
-              <span>Chat on WhatsApp: 0342 0000201</span>
+              <span>Chat on WhatsApp: {siteConfig.whatsappNumber}</span>
             </Link>
-            <a href="tel:03709986381" className="jtl-btn-call">
+            <a href={`tel:${siteConfig.phonePrimary.replace(/\s+/g, "")}`} className="jtl-btn-call">
               <FaPhone size={14} />
-              <span>Direct Call: 0370 9986381</span>
+              <span>Direct Call: {siteConfig.phonePrimary}</span>
             </a>
           </div>
         </div>
@@ -48,13 +48,13 @@ export default function Footer() {
           {/* Col 1: About & Mission */}
           <div className="jtl-footer-col jtl-footer-col-about">
             <div className="jtl-footer-brand">
-              <h2 className="jtl-footer-brand-name">Journey Towards Life</h2>
+              <div className="jtl-footer-brand-name">Journey Towards Life</div>
               <span className="jtl-footer-brand-sub">
                 Autism and Special Education Centre · Mingora, Swat
               </span>
             </div>
             <p className="jtl-footer-about-text">
-              Established in 2021 by founder <strong>Adil Khan</strong>, Journey Towards Life is devoted to supporting children with Autism Spectrum Disorder and developmental, communication, sensory, and learning needs. We partner closely with families to unlock strengths and nurture lifelong independence.
+              Established in 2021 by founder <strong>{siteConfig.founderName}</strong>, Journey Towards Life is devoted to supporting children with Autism Spectrum Disorder and developmental, communication, sensory, and learning needs. We partner closely with families to unlock strengths and nurture lifelong independence.
             </p>
             <div className="jtl-footer-slogan-box">
               <span>Nurture Strengths. Build Skills. Inspiring Life.</span>
@@ -90,13 +90,19 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="#faq">
+                  <FaAngleRight size={11} />
+                  <span>Frequently Asked Questions</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="#gallery">
                   <FaAngleRight size={11} />
                   <span>Centre Gallery</span>
                 </Link>
               </li>
               <li>
-                <Link href="https://wa.me/923420000201" target="_blank" rel="noopener noreferrer">
+                <Link href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer">
                   <FaAngleRight size={11} />
                   <span>Book Assessment</span>
                 </Link>
@@ -104,7 +110,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Therapy Services */}
+          {/* Col 3: Therapy Programs */}
           <div className="jtl-footer-col">
             <h4 className="jtl-footer-heading">Therapy Programs</h4>
             <ul className="jtl-footer-links">
@@ -151,7 +157,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="jtl-contact-label">Location:</span>
-                  <p>Near Girls Degree College, College Colony, Mingora, Swat, KPK, Pakistan</p>
+                  <p>{siteConfig.address}</p>
                 </div>
               </div>
               <div className="jtl-contact-item">
@@ -161,12 +167,12 @@ export default function Footer() {
                 <div>
                   <span className="jtl-contact-label">Primary WhatsApp / Call:</span>
                   <a
-                    href="https://wa.me/923420000201"
+                    href={siteConfig.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="jtl-contact-link"
                   >
-                    0342 0000201
+                    {siteConfig.whatsappNumber}
                   </a>
                 </div>
               </div>
@@ -177,7 +183,7 @@ export default function Footer() {
                 <div>
                   <span className="jtl-contact-label">Additional Phone Lines:</span>
                   <p>
-                    <a href="tel:03709986381">0370 9986381</a> · <a href="tel:03479684918">0347 9684918</a>
+                    <a href={`tel:${siteConfig.phonePrimary.replace(/\s+/g, "")}`}>{siteConfig.phonePrimary}</a> · <a href={`tel:${siteConfig.phoneSecondary.replace(/\s+/g, "")}`}>{siteConfig.phoneSecondary}</a>
                   </p>
                 </div>
               </div>
@@ -187,7 +193,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="jtl-contact-label">Founder and Director:</span>
-                  <p>Adil Khan</p>
+                  <p>{siteConfig.founderName}</p>
                 </div>
               </div>
             </div>
@@ -214,17 +220,17 @@ export default function Footer() {
           <div className="jtl-footer-developer">
             Developed by{" "}
             <Link
-              href="https://www.linkedin.com/in/wajid-ali-khan-364bb9220/?isSelfProfile=true"
+              href={siteConfig.developerLinkedIn}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Wajid Ali Khan
+              {siteConfig.developerName}
             </Link>
           </div>
 
           <div className="jtl-footer-social">
             <a
-              href="https://wa.me/923420000201"
+              href={siteConfig.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
@@ -232,18 +238,20 @@ export default function Footer() {
               <FaWhatsapp size={18} />
             </a>
             <a
-              href="https://www.linkedin.com/in/wajid-ali-khan-364bb9220/?isSelfProfile=true"
+              href={siteConfig.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn"
+              aria-label="Facebook"
             >
-              <FaLinkedin size={17} />
-            </a>
-            <a href="#!" aria-label="Facebook">
               <FaFacebook size={17} />
             </a>
-            <a href="#!" aria-label="Instagram">
-              <FaInstagram size={17} />
+            <a
+              href={siteConfig.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <FaYoutube size={18} />
             </a>
           </div>
         </div>

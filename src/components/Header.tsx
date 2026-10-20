@@ -16,6 +16,7 @@ import {
   FaPhone,
   FaLocationDot,
 } from "react-icons/fa6";
+import { siteConfig } from "@/config/site";
 
 export default function Header() {
   // Sticky Header State
@@ -44,6 +45,49 @@ export default function Header() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Lock background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
+
+  // Smooth scroll handler with sticky header offset compensation & drawer close
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string,
+    isMobile: boolean = false
+  ) => {
+    e.preventDefault();
+
+    if (isMobile) {
+      setMobileMenuOpen(false);
+    }
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      const delay = isMobile ? 120 : 0;
+      setTimeout(() => {
+        const headerOffset = 85;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth",
+        });
+
+        window.history.pushState(null, "", `#${targetId}`);
+      }, delay);
+    } else {
+      window.location.hash = targetId;
+    }
+  };
+
   return (
     <header id="xb-header-area" className="header-area header-style header-transparent">
       {/* Original Static Header */}
@@ -53,6 +97,7 @@ export default function Header() {
             <div className="xb-header-logo">
               <Link
                 href="#hero"
+                onClick={(e) => scrollToSection(e, "hero")}
                 className="logo1 jtl-header-logo-link"
                 aria-label="Journey Towards Life - Home"
               >
@@ -70,32 +115,50 @@ export default function Header() {
               <nav className="main-menu collapse navbar-collapse">
                 <ul>
                   <li>
-                    <Link href="#about">
+                    <Link
+                      href="#about"
+                      onClick={(e) => scrollToSection(e, "about")}
+                    >
                       <span>About Us</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#services">
+                    <Link
+                      href="#services"
+                      onClick={(e) => scrollToSection(e, "services")}
+                    >
                       <span>Services</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#why-choose">
+                    <Link
+                      href="#why-choose"
+                      onClick={(e) => scrollToSection(e, "why-choose")}
+                    >
                       <span>Why Choose Us</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#gallery">
+                    <Link
+                      href="#gallery"
+                      onClick={(e) => scrollToSection(e, "gallery")}
+                    >
                       <span>Gallery</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#videos">
+                    <Link
+                      href="#videos"
+                      onClick={(e) => scrollToSection(e, "videos")}
+                    >
                       <span>Videos</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#team">
+                    <Link
+                      href="#team"
+                      onClick={(e) => scrollToSection(e, "team")}
+                    >
                       <span>Our Team</span>
                     </Link>
                   </li>
@@ -114,7 +177,7 @@ export default function Header() {
             </div>
             <div className="header-btn">
               <Link
-                href="https://wa.me/923420000201"
+                href={siteConfig.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="thm-btn"
@@ -133,6 +196,7 @@ export default function Header() {
             <div className="xb-header-logo">
               <Link
                 href="#hero"
+                onClick={(e) => scrollToSection(e, "hero")}
                 className="logo1 jtl-header-logo-link"
                 aria-label="Journey Towards Life - Home"
               >
@@ -150,32 +214,50 @@ export default function Header() {
               <nav className="main-menu collapse navbar-collapse">
                 <ul>
                   <li>
-                    <Link href="#about">
+                    <Link
+                      href="#about"
+                      onClick={(e) => scrollToSection(e, "about")}
+                    >
                       <span>About Us</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#services">
+                    <Link
+                      href="#services"
+                      onClick={(e) => scrollToSection(e, "services")}
+                    >
                       <span>Services</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#why-choose">
+                    <Link
+                      href="#why-choose"
+                      onClick={(e) => scrollToSection(e, "why-choose")}
+                    >
                       <span>Why Choose Us</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#gallery">
+                    <Link
+                      href="#gallery"
+                      onClick={(e) => scrollToSection(e, "gallery")}
+                    >
                       <span>Gallery</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#videos">
+                    <Link
+                      href="#videos"
+                      onClick={(e) => scrollToSection(e, "videos")}
+                    >
                       <span>Videos</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#team">
+                    <Link
+                      href="#team"
+                      onClick={(e) => scrollToSection(e, "team")}
+                    >
                       <span>Our Team</span>
                     </Link>
                   </li>
@@ -194,7 +276,7 @@ export default function Header() {
             </div>
             <div className="header-btn">
               <Link
-                href="https://wa.me/923420000201"
+                href={siteConfig.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="thm-btn"
@@ -221,7 +303,7 @@ export default function Header() {
             <div className="xb-logo-mobile">
               <Link
                 href="#hero"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => scrollToSection(e, "hero", true)}
                 className="jtl-drawer-logo-link"
                 aria-label="Journey Towards Life - Home"
               >
@@ -233,12 +315,15 @@ export default function Header() {
                   className="jtl-drawer-logo-img"
                 />
               </Link>
-          </div>
+            </div>
 
             <nav className="xb-header-nav">
               <ul className="xb-menu-primary clearfix">
                 <li>
-                  <Link href="#about" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#about"
+                    onClick={(e) => scrollToSection(e, "about", true)}
+                  >
                     <span className="menu-icon">
                       <FaCircleInfo size={15} />
                     </span>
@@ -246,7 +331,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#services" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#services"
+                    onClick={(e) => scrollToSection(e, "services", true)}
+                  >
                     <span className="menu-icon">
                       <FaShapes size={15} />
                     </span>
@@ -254,7 +342,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#why-choose" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#why-choose"
+                    onClick={(e) => scrollToSection(e, "why-choose", true)}
+                  >
                     <span className="menu-icon">
                       <FaStar size={15} />
                     </span>
@@ -262,7 +353,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#gallery" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#gallery"
+                    onClick={(e) => scrollToSection(e, "gallery", true)}
+                  >
                     <span className="menu-icon">
                       <FaImages size={15} />
                     </span>
@@ -270,7 +364,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#videos" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#videos"
+                    onClick={(e) => scrollToSection(e, "videos", true)}
+                  >
                     <span className="menu-icon">
                       <FaPlay size={13} />
                     </span>
@@ -278,7 +375,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#team" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#team"
+                    onClick={(e) => scrollToSection(e, "team", true)}
+                  >
                     <span className="menu-icon">
                       <FaUserDoctor size={15} />
                     </span>
@@ -287,7 +387,7 @@ export default function Header() {
                 </li>
                 <li className="whatsapp-item">
                   <Link
-                    href="https://wa.me/923420000201"
+                    href={siteConfig.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
@@ -306,8 +406,8 @@ export default function Header() {
                 <FaWhatsapp size={17} style={{ color: "#25D366" }} />
                 <div>
                   <strong style={{ color: "#ffffff", fontSize: "12px", display: "block" }}>WhatsApp / Call:</strong>
-                  <a href="https://wa.me/923420000201" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", fontWeight: 700 }}>
-                    0342 0000201
+                  <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", fontWeight: 700 }}>
+                    {siteConfig.whatsappNumber}
                   </a>
                 </div>
               </div>
@@ -315,7 +415,7 @@ export default function Header() {
                 <FaPhone size={14} style={{ color: "#38bdf8" }} />
                 <div>
                   <strong style={{ color: "#ffffff", fontSize: "12px", display: "block" }}>Other Contacts:</strong>
-                  <a href="tel:03709986381" style={{ color: "#cbd5e1" }}>0370 9986381</a> · <a href="tel:03479684918" style={{ color: "#cbd5e1" }}>0347 9684918</a>
+                  <a href={`tel:${siteConfig.phonePrimary.replace(/\s+/g, "")}`} style={{ color: "#cbd5e1" }}>{siteConfig.phonePrimary}</a> · <a href={`tel:${siteConfig.phoneSecondary.replace(/\s+/g, "")}`} style={{ color: "#cbd5e1" }}>{siteConfig.phoneSecondary}</a>
                 </div>
               </div>
               <div className="mobile-drawer-contact-item">

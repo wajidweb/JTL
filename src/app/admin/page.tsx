@@ -26,6 +26,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
+import { siteConfig } from "@/config/site";
 
 interface TeamMember {
   id: number;
@@ -91,7 +92,7 @@ export default function AdminDashboardPage() {
     () => false
   );
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const API_BASE = siteConfig.apiUrl;
   const BACKEND_URL = API_BASE.replace(/\/api$/, "");
 
   // Real Dynamic Analytics Fetch from MySQL Backend
