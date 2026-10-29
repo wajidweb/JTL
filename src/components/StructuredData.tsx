@@ -81,6 +81,7 @@ export default function StructuredData() {
           siteConfig.whatsappUrl,
           siteConfig.facebookUrl,
           siteConfig.youtubeUrl,
+          siteConfig.tiktokUrl,
           siteConfig.developerLinkedIn,
         ],
         hasOfferCatalog: {

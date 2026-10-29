@@ -8,6 +8,7 @@ import {
   FaAngleRight,
   FaFacebook,
   FaYoutube,
+  FaTiktok,
 } from "react-icons/fa6";
 import { siteConfig } from "@/config/site";
 
@@ -230,12 +231,12 @@ export default function Footer() {
 
           <div className="jtl-footer-social">
             <a
-              href={siteConfig.whatsappUrl}
+              href={siteConfig.tiktokUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="WhatsApp"
+              aria-label="TikTok"
             >
-              <FaWhatsapp size={18} />
+              <FaTiktok size={16} />
             </a>
             <a
               href={siteConfig.facebookUrl}

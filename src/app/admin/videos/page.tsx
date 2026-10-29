@@ -17,12 +17,13 @@ import {
   FaFileVideo,
   FaUser,
   FaImages,
+  FaBullhorn,
 } from "react-icons/fa6";
 import { siteConfig } from "@/config/site";
 
 interface VideoItem {
   id: number;
-  category: "Session" | "Family";
+  category: "Session" | "Family" | "Message";
   title: string;
   badge: string;
   description: string;
@@ -94,7 +95,7 @@ function captureVideoFrame(file: File, seekTime = 0.5): Promise<File> {
 export default function AdminVideosPage() {
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategoryFilter, setActiveCategoryFilter] = useState<"ALL" | "Session" | "Family">("ALL");
+  const [activeCategoryFilter, setActiveCategoryFilter] = useState<"ALL" | "Session" | "Family" | "Message">("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -105,7 +106,7 @@ export default function AdminVideosPage() {
   const [editingVideo, setEditingVideo] = useState<VideoItem | null>(null);
 
   // Form Fields
-  const [category, setCategory] = useState<"Session" | "Family">("Session");
+  const [category, setCategory] = useState<"Session" | "Family" | "Message">("Session");
   const [title, setTitle] = useState("");
   const [badge, setBadge] = useState("Clinical Session");
   const [description, setDescription] = useState("");
@@ -215,7 +216,14 @@ export default function AdminVideosPage() {
     setEditingVideo(v);
     setCategory(v.category);
     setTitle(v.title);
-    setBadge(v.badge || (v.category === "Family" ? "Family Story" : "Clinical Session"));
+    setBadge(
+      v.badge ||
+        (v.category === "Family"
+          ? "Family Story"
+          : v.category === "Message"
+          ? "Message / FYI"
+          : "Clinical Session")
+    );
     setDescription(v.description || "");
     setParentName(v.parent_name || "");
     setVideoSourceType(v.video_type);
@@ -461,6 +469,24 @@ export default function AdminVideosPage() {
             >
               Hear It From Our Families ({videos.filter((v) => v.category === "Family").length})
             </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveCategoryFilter("Message")}
+              style={{
+                padding: "8px 16px",
+                borderRadius: "50px",
+                fontSize: "13px",
+                fontWeight: 600,
+                border: "1px solid var(--admin-border)",
+                background: activeCategoryFilter === "Message" ? "#c084fc" : "rgba(255, 255, 255, 0.05)",
+                color: activeCategoryFilter === "Message" ? "#08082e" : "#ffffff",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Message / FYI ({videos.filter((v) => v.category === "Message").length})
+            </button>
           </div>
 
           {/* Search Input */}
@@ -697,11 +723,19 @@ export default function AdminVideosPage() {
                     >
                       <span
                         className={`admin-badge ${
-                          video.category === "Family" ? "admin-badge-cyan" : "admin-badge-gold"
+                          video.category === "Family"
+                            ? "admin-badge-cyan"
+                            : video.category === "Message"
+                            ? "admin-badge-purple"
+                            : "admin-badge-gold"
                         }`}
                         style={{ fontSize: "10.5px" }}
                       >
-                        {video.category === "Family" ? "Family Testimonial" : "Session Video"}
+                        {video.category === "Family"
+                          ? "Family Testimonial"
+                          : video.category === "Message"
+                          ? "Message (FYI)"
+                          : "Session Video"}
                       </span>
                     </div>
                   </div>
@@ -888,7 +922,7 @@ export default function AdminVideosPage() {
                   <div
                     onClick={() => {
                       setCategory("Family");
-                      if (!badge || badge === "Clinical Session") setBadge("Family Story");
+                      if (!badge || badge === "Clinical Session" || badge === "Message / FYI") setBadge("Family Story");
                     }}
                     style={{
                       padding: "14px 18px",
@@ -928,6 +962,51 @@ export default function AdminVideosPage() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Category 3: Messages / FYI */}
+                  <div
+                    onClick={() => {
+                      setCategory("Message");
+                      if (!badge || badge === "Clinical Session" || badge === "Family Story") setBadge("Message / FYI");
+                    }}
+                    style={{
+                      padding: "14px 18px",
+                      borderRadius: "14px",
+                      border: "2px solid",
+                      borderColor: category === "Message" ? "#c084fc" : "rgba(255, 255, 255, 0.12)",
+                      background: category === "Message" ? "rgba(168, 85, 247, 0.12)" : "rgba(0, 0, 0, 0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "14px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "10px",
+                        background: category === "Message" ? "#c084fc" : "rgba(255, 255, 255, 0.08)",
+                        color: category === "Message" ? "#08082e" : "#c084fc",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "18px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <FaBullhorn />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "14.5px", fontWeight: 800, color: category === "Message" ? "#ffffff" : "var(--admin-text-muted)" }}>
+                        Message / FYI
+                      </div>
+                      <div style={{ fontSize: "12px", color: "var(--admin-text-dim)", marginTop: "2px" }}>
+                        Director updates &amp; announcements
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -939,7 +1018,13 @@ export default function AdminVideosPage() {
                     type="text"
                     className="admin-input"
                     style={{ paddingLeft: "16px" }}
-                    placeholder={category === "Session" ? "e.g. Speech Therapy & Communication Session" : "e.g. A Mother's Journey Towards Independence"}
+                    placeholder={
+                      category === "Session"
+                        ? "e.g. Speech Therapy & Communication Session"
+                        : category === "Message"
+                        ? "e.g. Important Announcement from Founder & Director"
+                        : "e.g. A Mother's Journey Towards Independence"
+                    }
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
@@ -952,7 +1037,7 @@ export default function AdminVideosPage() {
                     type="text"
                     className="admin-input"
                     style={{ paddingLeft: "16px" }}
-                    placeholder="e.g. Clinical Session or Family Story"
+                    placeholder="e.g. Clinical Session, Family Story, or Message / FYI"
                     value={badge}
                     onChange={(e) => setBadge(e.target.value)}
                     required

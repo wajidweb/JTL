@@ -600,6 +600,12 @@
   border: 1px solid rgba(37, 211, 102, 0.3);
 }
 
+.admin-badge-purple {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
 /* Action Buttons inside Table */
 .admin-action-btn {
   width: 34px;
@@ -772,8 +778,15 @@
 /* Video Modal Responsive Grid Classes */
 .admin-video-category-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+}
+
+@media (max-width: 860px) {
+  .admin-video-category-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .admin-video-meta-grid {

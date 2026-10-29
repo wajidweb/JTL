@@ -109,6 +109,9 @@ export default function Header() {
                   priority
                   className="jtl-header-logo-img"
                 />
+                <span className="jtl-header-brand-text">
+                  Journey Towards Life
+                </span>
               </Link>
             </div>
             <div className="main-menu__wrap navbar navbar-expand-xl p-0">
@@ -208,6 +211,9 @@ export default function Header() {
                   priority
                   className="jtl-header-logo-img"
                 />
+                <span className="jtl-header-brand-text">
+                  Journey Towards Life
+                </span>
               </Link>
             </div>
             <div className="main-menu__wrap navbar navbar-expand-xl p-0">
@@ -314,6 +320,9 @@ export default function Header() {
                   height={56}
                   className="jtl-drawer-logo-img"
                 />
+                <span className="jtl-drawer-brand-text">
+                  Journey Towards Life
+                </span>
               </Link>
             </div>
 

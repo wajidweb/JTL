@@ -18,7 +18,7 @@ export default function HeroSection() {
             <div className="col-xxl-9 col-xl-10 col-lg-11 col-12">
               <div className="hero-content">
                 <span className="xb-item--subtitle wow fadeInUp" style={{ visibility: "visible" }}>
-                  Autism and Special Education Centre · Mingora, Swat
+                  Autism and Special Education Centre · Mingora, Swat · Established in 2021
                 </span>
                 <h1 className="xb-item--title wow fadeInUp" style={{ visibility: "visible" }}>
                   Helping Every Child Communicate, Learn, and Step Confidently into Life.

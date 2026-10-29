@@ -13,7 +13,6 @@ import { siteConfig } from "@/config/site";
 interface FaqItem {
   id: string;
   num: string;
-  tag: string;
   question: string;
   answer: string;
 }
@@ -22,7 +21,6 @@ const FAQS: FaqItem[] = [
   {
     id: "faq-services",
     num: "01",
-    tag: "Therapy Programs",
     question: "What therapies and special education programs does Journey Towards Life offer?",
     answer:
       "Journey Towards Life provides five comprehensive, evidence-informed services under one roof in Mingora, Swat: Speech and Language Therapy (articulation, expressive/receptive vocabulary, and social communication), Occupational Therapy (OT for fine and gross motor skills, pencil grip, coordination, balance, and daily self-care), Behavioural Therapy (ABA strategies for positive adaptive learning), Sensory Issues Management (calming routines for sensory sensitivities), and Adaptive Special Education with Individual Education Plans (IEPs).",
@@ -30,14 +28,12 @@ const FAQS: FaqItem[] = [
   {
     id: "faq-booking",
     num: "02",
-    tag: "Assessments & Booking",
     question: "How do I book an initial consultation or developmental assessment for my child?",
     answer: `Booking an assessment is easy and confidential. You can message our primary WhatsApp line at ${siteConfig.whatsappNumber} or call our direct phone lines at ${siteConfig.phonePrimary} and ${siteConfig.phoneSecondary}. During the first visit, our specialists conduct a friendly developmental observation, discuss your child's communication and sensory profile, and formulate an individualized support plan.`,
   },
   {
     id: "faq-ages",
     num: "03",
-    tag: "Age & Eligibility",
     question: "What age groups and developmental conditions do you support?",
     answer:
       "We support toddlers, young children, and adolescents with Autism Spectrum Disorder (ASD), speech delays, developmental delays, motor coordination difficulties, sensory processing differences, and specialized learning hurdles. We place strong emphasis on early intervention to maximize long-term independence and cognitive development.",
@@ -45,7 +41,6 @@ const FAQS: FaqItem[] = [
   {
     id: "faq-parents",
     num: "04",
-    tag: "Family Collaboration",
     question: "How are parents and families involved throughout the child's therapy?",
     answer:
       "Family partnership is the cornerstone of our philosophy. We actively guide parents through weekly coaching sessions, provide practical home routines, and offer regular progress reports. This ensures that skills developed during centre sessions are naturally practiced and reinforced in everyday family life.",
@@ -53,7 +48,6 @@ const FAQS: FaqItem[] = [
   {
     id: "faq-iep",
     num: "05",
-    tag: "Personalized Plans",
     question: "What is an Individual Education Plan (IEP) and how is progress measured?",
     answer:
       "An Individual Education Plan (IEP) is a personalized learning roadmap designed around your child's unique starting abilities, strengths, and sensory profile. We establish clear, achievable milestones, regularly review targets, and collaborate with parents so that every improvement in communication, self-care, and learning is tracked and celebrated.",
@@ -61,7 +55,6 @@ const FAQS: FaqItem[] = [
   {
     id: "faq-location",
     num: "06",
-    tag: "Centre & Hours",
     question: "Where is Journey Towards Life located in Swat, and what are the opening hours?",
     answer: `Our centre is situated near Girls Degree College in College Colony, Mingora, Swat, Khyber Pakhtunkhwa, Pakistan. We are open Monday through Saturday from 8:30 AM to 4:00 PM. You can get exact turn-by-turn driving directions by clicking the Google Maps link on our website.`,
   },
@@ -111,10 +104,7 @@ export default function FaqSection() {
                   id={`faq-btn-${faq.id}`}
                 >
                   <div className="jtl-faq-card-left">
-                    <div className="jtl-faq-card-meta">
-                      <span className="jtl-faq-num">{faq.num}</span>
-                      <span className="jtl-faq-tag">{faq.tag}</span>
-                    </div>
+                    <span className="jtl-faq-num">{faq.num}</span>
                     <h3 className="jtl-faq-question-text">{faq.question}</h3>
                   </div>
 

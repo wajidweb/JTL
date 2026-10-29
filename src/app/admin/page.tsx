@@ -46,7 +46,7 @@ interface GalleryItem {
 
 interface VideoItem {
   id: number;
-  category: "Session" | "Family";
+  category: "Session" | "Family" | "Message";
   title: string;
   badge: string;
   video_type: "upload" | "link";
@@ -631,7 +631,11 @@ export default function AdminDashboardPage() {
                         </div>
                         <span
                           className={`admin-badge ${
-                            v.category === "Family" ? "admin-badge-cyan" : "admin-badge-gold"
+                            v.category === "Family"
+                              ? "admin-badge-cyan"
+                              : v.category === "Message"
+                              ? "admin-badge-purple"
+                              : "admin-badge-gold"
                           }`}
                           style={{ fontSize: "10px", marginTop: "2px" }}
                         >

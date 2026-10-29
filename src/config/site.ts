@@ -24,11 +24,13 @@ export const siteConfig = {
     "Near Girls Degree College, College Colony, Mingora, Swat, KPK, Pakistan",
 
   // Official Social Media Channels
+  tiktokUrl:
+    process.env.NEXT_PUBLIC_TIKTOK_URL ||
+    "https://www.tiktok.com/@jtl.swat?_r=1&_t=ZS-9AxGqLkuIU8",
   facebookUrl:
-    process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/jtl.pk/",
+    process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/JTL.Swat",
   youtubeUrl:
-    process.env.NEXT_PUBLIC_YOUTUBE_URL ||
-    "https://www.youtube.com/@jtlswat5618/videos",
+    process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://www.youtube.com/@jtl-swat",
 
   // People & Credits
   founderName: process.env.NEXT_PUBLIC_FOUNDER_NAME || "Adil Khan",

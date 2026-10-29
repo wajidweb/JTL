@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 
 interface VideoItem {
   id: number;
-  category: "Session" | "Family";
+  category: "Session" | "Family" | "Message";
   title: string;
   badge: string;
   description: string;
@@ -83,6 +83,7 @@ export default function VideosSection() {
 
   const sessionVideos = videos.filter((v) => v.category === "Session");
   const familyVideos = videos.filter((v) => v.category === "Family");
+  const messageVideos = videos.filter((v) => v.category === "Message");
 
   return (
     <section id="videos" className="jtl-videos-section pos-rel z-1 gradient-bg radius-20 mt-30">
@@ -211,7 +212,7 @@ export default function VideosSection() {
                   </h3>
                 </div>
 
-                <div className="jtl-video-testimonials-grid">
+                <div className="jtl-video-testimonials-grid mb-40">
                   {familyVideos.map((item) => {
                     const thumb = item.thumbnail_url
                       ? item.thumbnail_url.startsWith("http")
@@ -254,6 +255,63 @@ export default function VideosSection() {
                           <p className="jtl-video-desc">{item.description}</p>
                           <span className="jtl-video-watch-link" style={{ color: "#38bdf8" }}>
                             <span>Listen to Family Story</span>
+                            <FaArrowRight size={13} />
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+
+            {/* 3. Messages & Announcements Subsection */}
+            {messageVideos.length > 0 && (
+              <>
+                <div className="jtl-video-category-header">
+                  <h3 className="jtl-video-category-title">
+                    <span className="cat-dot" style={{ backgroundColor: "#c084fc" }}></span>
+                    Messages &amp; Announcements (FYI)
+                  </h3>
+                </div>
+
+                <div className="jtl-video-sessions-grid mb-40">
+                  {messageVideos.map((item) => {
+                    const thumb = item.thumbnail_url
+                      ? item.thumbnail_url.startsWith("http")
+                        ? item.thumbnail_url
+                        : `${BACKEND_URL}${item.thumbnail_url}`
+                      : "/assets/img/hero/hero_img.jpeg";
+
+                    return (
+                      <div
+                        key={item.id}
+                        className="jtl-video-card"
+                        onClick={() => setActiveVideo(item)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") setActiveVideo(item);
+                        }}
+                        aria-label={`Watch ${item.title}`}
+                      >
+                        <div className="jtl-video-thumb-wrap">
+                          <img src={thumb} alt={item.title} />
+                          <div className="jtl-video-play-btn">
+                            <FaPlay size={18} />
+                          </div>
+                        </div>
+                        <div className="jtl-video-body">
+                          <span
+                            className="jtl-video-badge"
+                            style={{ color: "#c084fc", background: "rgba(168, 85, 247, 0.12)" }}
+                          >
+                            {item.badge}
+                          </span>
+                          <h4 className="jtl-video-title">{item.title}</h4>
+                          <p className="jtl-video-desc">{item.description}</p>
+                          <span className="jtl-video-watch-link" style={{ color: "#c084fc" }}>
+                            <span>Watch Message / FYI</span>
                             <FaArrowRight size={13} />
                           </span>
                         </div>
